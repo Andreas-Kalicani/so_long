@@ -4,9 +4,13 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
+SANITIZER = -g3 -fsanitize=address
+
 MLX_PATH = mlx/
 
 MLX_LIB = $(MLX_PATH)libmlx.a
+
+LIBFT_LIB = ./libft/libft.a
 
 MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit 
 
@@ -33,6 +37,7 @@ all: subsystems $(NAME)
 subsystems:
 		@echo $(B)
 		make -C $(MLX_PATH) all
+		make -C libft
 		@echo Compiling subsystem
 
 $(NAME): $(OBJECTS)
@@ -40,17 +45,19 @@ $(NAME): $(OBJECTS)
 		@echo $(G) Finished [$(CFILES)]$(X)
 		@echo
 		@echo $(Y)Compiling [$(NAME)]
-		@$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJECTS) $(MLX_LIB) -o $(NAME)
+		@$(CC) $(CFLAGS) $(SANITIZER) $(MLX_FLAGS) $(OBJECTS) $(MLX_LIB) $(LIBFT_LIB) -o $(NAME)
 		@echo $(G)Finished [$NAME]$(X)
 
 clean:
 	@make -C $(MLX_PATH) clean
+	@make -s $@ -C libft 
 	@rm -f $(OBJECTS)
 	@echo $(R)Removed [$(OBJECTS)]$(X)
 
 fclean: clean
 	@make -C $(MLX_PATH) fclean
-	@rm -f $(NAME)
+	@make -s $@ -C libft
+	@rm -rf $(NAME)
 	@echo $(R)Removed [$(NAME)]$(X)
 
 re: fclean all
