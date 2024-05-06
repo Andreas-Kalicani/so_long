@@ -6,7 +6,7 @@
 /*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:03 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/04/30 12:44:01 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:26:20 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,54 @@
 #include <mlx.h>
 #include <stdlib.h> 
 #include <stdio.h>
+#include "./error.h"
+#include <fcntl.h>
+#include "./libft/libft.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
-    void *mlx;
-    void *mlx_win;
-    void *image;
-    int image_width;
-    int image_height;
-    char *image_path = "./sprites/platforms.xpm";
-    //int x;
-    //int y;
-    //int i;
-    //y = 0;
-    //x = 0;
-    //i = 0;
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 800, 600, "so_long");
-    image = mlx_xpm_file_to_image(mlx, image_path, &image_width, &image_height);
-    printf("image address = %p\n", image);
-    printf("width is %i\n", image_width);
-    printf("height is %i\n", image_height);
-    /*int gap = x / 64;
-    int x_coord = (600 - x * 2) / 4 + (i *(x + gap));
-    */
-   mlx_put_image_to_window(mlx, mlx_win, image, (600 - image_width) / 4, (800 - image_height) / 4);
-    mlx_loop(mlx);
+    t_game  data;
+    t_texture   t_data;
+    int     x;
+    int     y;
+
+    y = 0;
+    if (argc != 2)
+        return (error(bad_args));
+    data.fd = open(argv[1], O_RDONLY);
+    data.map_height = count_lines(argv[1]);
+    data.map = parse(&data);
+    data.mlx = mlx_init();
+    data.window = mlx_new_window(data.mlx, 1920, 1080, "so_long");
+    data.floor_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/floor.xpm", &(data.floor_texture.width), &(data.floor_texture.height));
+    data.wall_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/wall.xpm", &(data.wall_texture.width), &(data.wall_texture.height));
+    data.coin_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/coin.xpm", &(data.coin_texture.width), &(data.coin_texture.height));
+    data.player_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/knight.xpm", &(data.player_texture.width), &(data.player_texture.height));
+
+
+    //dont forget to fix the new structure, have a look at how it looks and put all of the correct values in the correct places. i have saved the textures for the floor wall coin and player, you can just use them at will now. Good luck !
+
+    
+    while (data.map[y])
+    {
+        x = 0;
+        while (data.map[y][x] && data.map[y][x] != '\n')
+        {
+            if (data.map[y][x] == 'P')
+            {
+                data.map_height = x;
+                data.map_width = y;
+            }
+            t_data.textures = mlx_xpm_file_to_image(data.mlx, get_image_path((data.map)[y][x]), &(data.map_width), &(data.map_height));
+            mlx_put_image_to_window(data.mlx, data.window, t_data.textures, (1920 / 2) + (x * 15), (1080 / 2) + (y * 15));
+            x++;
+        }
+        y++;
+    }
+    // printf("this is on top of me ! : %c\n", data.map[data.py -1][data.px]);
+    // printf("this is below me ! : %c\n", data.map[data.py + 1][data.px]);
+    // printf("this is on my left ! : %c\n", data.map[data.py][data.px - 1]);
+    // printf("this is on my right ! : %c\n", data.map[data.py][data.px + 1]);
+    mlx_key_hook(data.window, &character_moves, &data);
+    mlx_loop(data.mlx);
 }
