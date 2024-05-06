@@ -6,7 +6,7 @@
 /*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:03 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/06 18:26:20 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:42:07 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 int main(int argc, char **argv)
 {
     t_game  data;
-    t_texture   t_data;
     int     x;
     int     y;
 
@@ -36,12 +35,7 @@ int main(int argc, char **argv)
     data.floor_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/floor.xpm", &(data.floor_texture.width), &(data.floor_texture.height));
     data.wall_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/wall.xpm", &(data.wall_texture.width), &(data.wall_texture.height));
     data.coin_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/coin.xpm", &(data.coin_texture.width), &(data.coin_texture.height));
-    data.player_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/knight.xpm", &(data.player_texture.width), &(data.player_texture.height));
-
-
-    //dont forget to fix the new structure, have a look at how it looks and put all of the correct values in the correct places. i have saved the textures for the floor wall coin and player, you can just use them at will now. Good luck !
-
-    
+    data.player_texture.textures = mlx_xpm_file_to_image(data.mlx, "./sprites/knight.xpm", &(data.wall_texture.width), &(data.wall_texture.height));
     while (data.map[y])
     {
         x = 0;
@@ -49,19 +43,19 @@ int main(int argc, char **argv)
         {
             if (data.map[y][x] == 'P')
             {
-                data.map_height = x;
-                data.map_width = y;
+                data.px = x;
+                data.py = y;
             }
-            t_data.textures = mlx_xpm_file_to_image(data.mlx, get_image_path((data.map)[y][x]), &(data.map_width), &(data.map_height));
-            mlx_put_image_to_window(data.mlx, data.window, t_data.textures, (1920 / 2) + (x * 15), (1080 / 2) + (y * 15));
+            data.textures = mlx_xpm_file_to_image(data.mlx, get_image_path((data.map)[y][x]), &(data.width), &(data.height));
+            mlx_put_image_to_window(data.mlx, data.window, data.textures, (1920 / 2) + (x * 15), (1080 / 2) + (y * 15));
             x++;
         }
         y++;
     }
-    // printf("this is on top of me ! : %c\n", data.map[data.py -1][data.px]);
-    // printf("this is below me ! : %c\n", data.map[data.py + 1][data.px]);
-    // printf("this is on my left ! : %c\n", data.map[data.py][data.px - 1]);
-    // printf("this is on my right ! : %c\n", data.map[data.py][data.px + 1]);
+    printf("this is on top of me ! : %c\n", data.map[data.py -1][data.px]);
+    printf("this is below me ! : %c\n", data.map[data.py + 1][data.px]);
+    printf("this is on my left ! : %c\n", data.map[data.py][data.px - 1]);
+    printf("this is on my right ! : %c\n", data.map[data.py][data.px + 1]);
     mlx_key_hook(data.window, &character_moves, &data);
     mlx_loop(data.mlx);
 }
