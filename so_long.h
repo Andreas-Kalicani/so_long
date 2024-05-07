@@ -6,7 +6,7 @@
 /*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:29 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/06 18:35:36 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:15:35 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ enum    key {
     ESC = 53
 };
 
+enum    texture {
+    player = 'P',
+    wall = '1',
+    floor = '0',
+    coin = 'C',
+    door = 'E'
+};
+
 typedef struct s_coord {
     int x;
     int y;
@@ -35,21 +43,25 @@ typedef struct s_texture {
     int     height;
 }               t_texture;
 
+typedef struct s_map {
+    char    **map;
+    int     map_height;
+    int     map_width;
+    int     coin_count;
+    int     exit_count;
+    int     player_count;
+}               t_map;
+
 typedef struct s_game {
     int     fd;
     void    *mlx;
     void    *window;
-    int    width;
-    int    height;
-    int     py;
-    int     px;
-    void    *textures;
     t_texture    player_texture;
     t_texture    floor_texture;
     t_texture    wall_texture;
     t_texture    coin_texture;
-    t_texture    exit_texture;
-    char     **map;
+    t_texture    door_texture;
+    t_map   map;
     int     map_height;
     int     map_width;
     int     count_moves;
@@ -60,6 +72,5 @@ typedef struct s_game {
 int count_lines(char *path);
 char **parse(t_game *data);
 char    **map_parse(char *path);
-char *get_image_path(char tile);
 int character_moves(int key, t_game *data);
 #endif

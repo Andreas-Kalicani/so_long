@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-SANITIZER = -g3 -fsanitize=address
+#SANITIZER = -g3 -fsanitize=address
 
 MLX_PATH = mlx/
 
