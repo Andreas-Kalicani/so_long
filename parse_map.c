@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:06:50 by akalican          #+#    #+#             */
-/*   Updated: 2024/05/16 05:31:15 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/19 16:36:56 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int	map_checker(t_game *data)
 // check if surrounded by walls: DONE
 // check if all coins and exit are reachable
 // check if there is no leaks
+// change all the exit to E to free() them
 
 char	**parse(t_game *data)
 {

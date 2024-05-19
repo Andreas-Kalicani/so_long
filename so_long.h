@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:29 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/16 05:22:25 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/19 16:31:41 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,6 @@ int				character_moves(int key, t_game *data);
 int				map_checker(t_game *data);
 int 			count_c(t_game *data);
 void			flood_fill(t_game *data, int x, int y, int *count_c);
+//int 			flood_fill(t_game *data, int x, int y, int *count_c);
+int				check_map(t_game *data);
 #endif
