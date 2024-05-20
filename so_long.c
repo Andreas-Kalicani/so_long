@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:03 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/16 21:17:51 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/20 13:29:28 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_map(t_game *data)
 
 int	close_window(t_game *data)
 {
-	free_map(data);
+	ft_double_pointer_free(data->map.map);
 	exit(0);
 }
 
@@ -71,7 +71,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (error(bad_args));
 	ft_bzero(&data, sizeof(t_game));
-	data.fd = open(argv[1], O_RDONLY);
+	data.fd = open(argv[1], O_RDONLY);//shoudlnt entenr code if fd < 0
 	data.map_height = count_lines(argv[1]);
 	data.map.map = parse(&data);
 	data.mlx = mlx_init();

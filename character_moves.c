@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   character_moves.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:50:34 by akalican          #+#    #+#             */
-/*   Updated: 2024/05/17 12:52:50 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/20 13:26:24 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ void	move_right(t_game *data)
 
 void	destroy(t_game *data)
 {
+	ft_double_pointer_free(data->map.map);
 	mlx_destroy_window(data->mlx, data->window);
 	exit(0);
 }

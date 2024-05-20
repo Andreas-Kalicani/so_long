@@ -6,7 +6,7 @@
 /*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:29 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/19 16:31:41 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:25:02 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,11 @@ char			**parse(t_game *data);
 char			**map_parse(char *path);
 int				character_moves(int key, t_game *data);
 int				map_checker(t_game *data);
-int 			count_c(t_game *data);
+int 			count_coins(t_game *data);
 void			flood_fill(t_game *data, int x, int y, int *count_c);
 //int 			flood_fill(t_game *data, int x, int y, int *count_c);
 int				check_map(t_game *data);
+char 			**map_duplicate(t_game *data);
+int				check_if_player_can_reach_coin(t_game *data, char **map_dup, int x, int y);
+void			ft_double_pointer_free(char	**pointer);
 #endif

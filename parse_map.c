@@ -6,7 +6,7 @@
 /*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:06:50 by akalican          #+#    #+#             */
-/*   Updated: 2024/05/19 16:36:56 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:52:59 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	count_lines(char *path)
 		number_of_lines++;
 		read = get_next_line(fd);
 	}
+	free(read);
 	close(fd);
 	return (number_of_lines);
 }
@@ -114,50 +115,115 @@ int	check_if_coins_are_exaccesible(t_game *data)
 	return (0);
 }
 
-int	check_if_door_sourneded_by_wall(t_game *data)
+char **map_duplicate(t_game *data)
+{
+    int i = 0, j;
+    char **dupped_map;
+
+    dupped_map = (char **)malloc(sizeof(char *) * (data->map_height + 1));
+
+
+    while (i < data->map_height) {
+        dupped_map[i] = (char *)malloc(sizeof(char) * (data->map_width + 1));
+        j = 0;
+        while (j < data->map_width) 
+		{
+			if (data->map.map[i][j] == 'P' || data->map.map[i][j] == 'E' || data->map.map[i][j] == 'C' || data->map.map[i][j] == '1') 
+            	dupped_map[i][j] = data->map.map[i][j];
+			else
+				dupped_map[i][j] = 'F';
+            j++;
+        }
+        dupped_map[i][j] = '\0'; 
+        i++;
+    }
+    dupped_map[i] = NULL; 
+    return dupped_map;
+}
+
+void	print_map(char **map)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (i < data->map_height)
+	while (map[i])
 	{
-		j = 0;
-		while (j < data->map_width)
-		{
-			if (data->map.map[i][j] == 'E')
-			{
-				if (i > 0 && i < data->map_height - 1 && j > 0
-					&& j < data->map_width - 1 && data->map.map[i][j - 1] == '1'
-					&& data->map.map[i][j + 1] == '1' && data->map.map[i
-					- 1][j] == '1' && data->map.map[i + 1][j] == '1')
-				{
-					exit(1);
-				}
-			}
-			j++;
-		}
+		printf("%s\n", map[i]);
 		i++;
 	}
-	return (0);
 }
+
+int check_if_player_can_reach_coin(t_game *data, char **map_dup, int x, int y)
+{
+    if (x >= data->map_width || y >= data->map_height || x < 0 || y < 0 || map_dup[y][x] == 'V')
+        return (0);
+    if (map_dup[y][x] == 'P')
+        return (1);
+
+    map_dup[y][x] = 'V';
+
+    int left = 0, right = 0, up = 0, down = 0;
+
+    if (x > 0 && (map_dup[y][x - 1] == 'F' || map_dup[y][x - 1] == 'C' || map_dup[y][x - 1] == 'E' || map_dup[y][x - 1] == 'P'))
+        left = check_if_player_can_reach_coin(data, map_dup ,x - 1, y);
+    if (x < data->map_width - 1 && (map_dup[y][x + 1] == 'F' || map_dup[y][x + 1] == 'C' || map_dup[y][x + 1] == 'E' || map_dup[y][x + 1] == 'P'))
+        right = check_if_player_can_reach_coin(data, map_dup, x + 1, y);
+    if (y > 0 && (map_dup[y - 1][x] == 'F' || map_dup[y - 1][x] == 'C' || map_dup[y - 1][x] == 'E' || map_dup[y - 1][x] == 'P'))
+        up = check_if_player_can_reach_coin(data, map_dup,x, y - 1);
+    if (y < data->map_height - 1 && (map_dup[y + 1][x] == 'F' || map_dup[y + 1][x] == 'C' || map_dup[y + 1][x] == 'E' || map_dup[y + 1][x] == 'P'))
+        down = check_if_player_can_reach_coin(data, map_dup,x, y + 1);
+
+    return left || right || up || down;
+}
+
+void	ft_double_pointer_free(char	**pointer)
+{
+	int	i;
+
+	i = 0;
+	while (pointer[i])
+	{
+		free(pointer[i]);
+		i++;
+	}
+	free(pointer);
+}	
 
 int	map_checker(t_game *data)
 {
+	int	x;
+	int	y;
+
+	y = 0;
+	x = 0;
+	char **map_dup = map_duplicate(data);//malloced
 	if (data->map.player_count != 1)
 		return (0);
 	if (data->map.coin_count < 1)
 		return (0);
 	if (data->map.exit_count != 1)
 		return (0);
-	if (check_if_door_sourneded_by_wall(data))
-		exit(1);
-	if (check_if_coins_are_exaccesible(data))
-		exit(1);
+	while (data->map.map[y])
+	{
+		while (data->map.map[y][x])
+		{
+			if (data->map.map[y][x] == 'C' || data->map.map[y][x] == 'E')
+			{
+				if (check_if_player_can_reach_coin(data, map_dup, x, y) == 0)
+					exit(1);
+				ft_double_pointer_free(map_dup);
+				map_dup = map_duplicate(data);//changing memory adress + new malloc dou
+			}
+			x++;
+		}
+		y++;
+		x = 0;
+	}
+	ft_double_pointer_free(map_dup);
 	return (1);
 }
 
-// check if is rectangle and square:DONE
+// check if is rectangle and square:DONExw
 // check if surrounded by walls: DONE
 // check if all coins and exit are reachable
 // check if there is no leaks
@@ -168,12 +234,15 @@ char	**parse(t_game *data)
 	char	*buffer;
 	int		i;
 	char	**return_value;
+	char	*temp;
 
 	i = 0;
 	return_value = (char **)malloc(sizeof(char *) * (data->map_height + 1));
 	buffer = get_next_line(data->fd);
+	temp = buffer;
 	buffer = ft_strtrim(buffer, " \n");
-	data->map_width = ft_strlen(buffer);
+	free(temp);
+	data->map_width = ft_strlen(buffer);//segfault when buffer null
 	while (buffer)
 	{
 		if ((int)ft_strlen(buffer) != data->map_width)
@@ -182,7 +251,9 @@ char	**parse(t_game *data)
 		element_counter(data, buffer);
 		free(buffer);
 		buffer = get_next_line(data->fd);
+		temp = buffer;
 		buffer = ft_strtrim(buffer, " \n");
+		free(temp);
 		i++;
 	}
 	return_value[i] = NULL;
