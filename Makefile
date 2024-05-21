@@ -22,7 +22,7 @@ X = "\033[0m"
 UP = "\033[A"
 CUT = "\033[K"
 
-CFILES = so_long.c parse_map.c error.c character_moves.c valid_path.c
+CFILES = so_long.c parse_map.c error.c character_moves.c valid_path.c utils.c
 
 OBJECTS = $(CFILES:.c=.o)
 

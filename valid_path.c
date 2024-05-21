@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:28:31 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/20 10:55:08 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:32:09 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ int	count_coins(t_game *data)
 		while (data->map.map[i][j])
 		{
 			if (data->map.map[i][j] == 'C')
-			{
-				
 				count++;
-			}
 			j++;
 		}
 		i++;

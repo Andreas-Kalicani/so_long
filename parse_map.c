@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:06:50 by akalican          #+#    #+#             */
-/*   Updated: 2024/05/20 13:52:59 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:42:49 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,88 +115,15 @@ int	check_if_coins_are_exaccesible(t_game *data)
 	return (0);
 }
 
-char **map_duplicate(t_game *data)
-{
-    int i = 0, j;
-    char **dupped_map;
-
-    dupped_map = (char **)malloc(sizeof(char *) * (data->map_height + 1));
-
-
-    while (i < data->map_height) {
-        dupped_map[i] = (char *)malloc(sizeof(char) * (data->map_width + 1));
-        j = 0;
-        while (j < data->map_width) 
-		{
-			if (data->map.map[i][j] == 'P' || data->map.map[i][j] == 'E' || data->map.map[i][j] == 'C' || data->map.map[i][j] == '1') 
-            	dupped_map[i][j] = data->map.map[i][j];
-			else
-				dupped_map[i][j] = 'F';
-            j++;
-        }
-        dupped_map[i][j] = '\0'; 
-        i++;
-    }
-    dupped_map[i] = NULL; 
-    return dupped_map;
-}
-
-void	print_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
-}
-
-int check_if_player_can_reach_coin(t_game *data, char **map_dup, int x, int y)
-{
-    if (x >= data->map_width || y >= data->map_height || x < 0 || y < 0 || map_dup[y][x] == 'V')
-        return (0);
-    if (map_dup[y][x] == 'P')
-        return (1);
-
-    map_dup[y][x] = 'V';
-
-    int left = 0, right = 0, up = 0, down = 0;
-
-    if (x > 0 && (map_dup[y][x - 1] == 'F' || map_dup[y][x - 1] == 'C' || map_dup[y][x - 1] == 'E' || map_dup[y][x - 1] == 'P'))
-        left = check_if_player_can_reach_coin(data, map_dup ,x - 1, y);
-    if (x < data->map_width - 1 && (map_dup[y][x + 1] == 'F' || map_dup[y][x + 1] == 'C' || map_dup[y][x + 1] == 'E' || map_dup[y][x + 1] == 'P'))
-        right = check_if_player_can_reach_coin(data, map_dup, x + 1, y);
-    if (y > 0 && (map_dup[y - 1][x] == 'F' || map_dup[y - 1][x] == 'C' || map_dup[y - 1][x] == 'E' || map_dup[y - 1][x] == 'P'))
-        up = check_if_player_can_reach_coin(data, map_dup,x, y - 1);
-    if (y < data->map_height - 1 && (map_dup[y + 1][x] == 'F' || map_dup[y + 1][x] == 'C' || map_dup[y + 1][x] == 'E' || map_dup[y + 1][x] == 'P'))
-        down = check_if_player_can_reach_coin(data, map_dup,x, y + 1);
-
-    return left || right || up || down;
-}
-
-void	ft_double_pointer_free(char	**pointer)
-{
-	int	i;
-
-	i = 0;
-	while (pointer[i])
-	{
-		free(pointer[i]);
-		i++;
-	}
-	free(pointer);
-}	
-
 int	map_checker(t_game *data)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	char	**map_dup;
 
 	y = 0;
 	x = 0;
-	char **map_dup = map_duplicate(data);//malloced
+	map_dup = map_duplicate(data);
 	if (data->map.player_count != 1)
 		return (0);
 	if (data->map.coin_count < 1)
@@ -212,7 +139,7 @@ int	map_checker(t_game *data)
 				if (check_if_player_can_reach_coin(data, map_dup, x, y) == 0)
 					exit(1);
 				ft_double_pointer_free(map_dup);
-				map_dup = map_duplicate(data);//changing memory adress + new malloc dou
+				map_dup = map_duplicate(data);
 			}
 			x++;
 		}
@@ -242,7 +169,7 @@ char	**parse(t_game *data)
 	temp = buffer;
 	buffer = ft_strtrim(buffer, " \n");
 	free(temp);
-	data->map_width = ft_strlen(buffer);//segfault when buffer null
+	data->map_width = ft_strlen(buffer);
 	while (buffer)
 	{
 		if ((int)ft_strlen(buffer) != data->map_width)
@@ -264,21 +191,3 @@ char	**parse(t_game *data)
 		exit(1);
 	return (return_value);
 }
-
-// int main()
-// {
-//     int     i;
-//     t_game  data;
-
-//     i = 0;
-//     data.map = parse(&data);
-//     while (data.map[i])
-//     {
-//         printf("Line %i : %i\n", i, data.map[i]);
-//         i++;
-//     }
-
-//     int x = 1;
-//     int y = 3;
-//     printf("Point at (%i;%i) is %c\n", x, y, data.map[y][x]);
-// }
