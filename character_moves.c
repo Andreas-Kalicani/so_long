@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   character_moves.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:50:34 by akalican          #+#    #+#             */
-/*   Updated: 2024/05/20 13:26:24 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:31:43 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,8 @@ void	move_up(t_game *data)
 		if (data->map.map[data->player.y][data->player.x] == 'C')
 			flood_fill(data, data->player.x, data->player.y,
 				&data->map.coin_count);
-		printf("Before flood fill:\n");
-		printf("data map: %p, x: %d, y: %d", &data, data->map_height,
-			data->map_width);
 		count_c = data->map.coin_count;
 		flood_fill(data, data->map_width, data->map_height, &count_c);
-		printf("After flood fill:\n");
-		printf("after flood map: %p: y: %d, x: %d", data, data->map_height,
-			data->map_width);
-		printf("Coin count: %d\n", count_c);
-		printf("this is on top of me ! : %c\n", data->map.map[data->player.y
-			- 1][data->player.x]);
-		printf("this is below me ! : %c\n", data->map.map[data->player.y
-			+ 1][data->player.x]);
-		printf("this is on my left ! : %c\n",
-			data->map.map[data->player.y][data->player.x - 1]);
-		printf("this is on my right ! : %c\n",
-			data->map.map[data->player.y][data->player.x + 1]);
 	}
 }
 
@@ -102,23 +87,10 @@ void	move_down(t_game *data)
 		if (data->map.map[data->player.y][data->player.x] == 'C')
 			flood_fill(data, data->player.x, data->player.y,
 				&data->map.coin_count);
-		printf("Before flood fill:\n");
 		printf("data map: %p, x: %d, y: %d", &data, data->map_height,
 			data->map_width);
 		count_c = data->map.coin_count;
 		flood_fill(data, data->map_width, data->map_height, &count_c);
-		printf("After flood fill:\n");
-		printf("after flood map: %p: y: %d, x: %d", data, data->map_height,
-			data->map_width);
-		printf("Coin count: %d\n", count_c);
-		printf("this is on top of me ! : %c\n", data->map.map[data->player.y
-			- 1][data->player.x]);
-		printf("this is below me ! : %c\n", data->map.map[data->player.y
-			+ 1][data->player.x]);
-		printf("this is on my left ! : %c\n",
-			data->map.map[data->player.y][data->player.x - 1]);
-		printf("this is on my right ! : %c\n",
-			data->map.map[data->player.y][data->player.x + 1]);
 	}
 }
 
@@ -145,14 +117,6 @@ void	move_left(t_game *data)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->player_texture.textures, (1920 / 2) + (data->player.x * 15),
 			(1080 / 2) + (data->player.y * 15));
-		printf("this is on top of me ! : %c\n", data->map.map[data->player.y
-			- 1][data->player.x]);
-		printf("this is below me ! : %c\n", data->map.map[data->player.y
-			+ 1][data->player.x]);
-		printf("this is on my left ! : %c\n",
-			data->map.map[data->player.y][data->player.x - 1]);
-		printf("this is on my right ! : %c\n",
-			data->map.map[data->player.y][data->player.x + 1]);
 	}
 }
 
@@ -179,22 +143,7 @@ void	move_right(t_game *data)
 		mlx_put_image_to_window(data->mlx, data->window,
 			data->player_texture.textures, (1920 / 2) + (data->player.x * 15),
 			(1080 / 2) + (data->player.y * 15));
-		printf("this is on top of me ! : %c\n", data->map.map[data->player.y
-			- 1][data->player.x]);
-		printf("this is below me ! : %c\n", data->map.map[data->player.y
-			+ 1][data->player.x]);
-		printf("this is on my left ! : %c\n",
-			data->map.map[data->player.y][data->player.x - 1]);
-		printf("this is on my right ! : %c\n",
-			data->map.map[data->player.y][data->player.x + 1]);
 	}
-}
-
-void	destroy(t_game *data)
-{
-	ft_double_pointer_free(data->map.map);
-	mlx_destroy_window(data->mlx, data->window);
-	exit(0);
 }
 
 int	character_moves(int key, t_game *data)
@@ -209,15 +158,13 @@ int	character_moves(int key, t_game *data)
 		move_right(data);
 	if (key == ESC)
 		destroy(data);
-	if (data->map.map[data->player.y][data->player.x] == 'C')
+	if (data->map.coin_count == 0)
 	{
-		data->map.map[data->player.y][data->player.x] = '0';
-		flood_fill(data, data->player.x, data->player.y, &data->map.coin_count);
-	}
-	if (data->map.map[data->player.y][data->player.x] == 'E')
-	{
-		write(1, "game over!\n", 10);
-		destroy(data);
+		if (data->map.map[data->player.y][data->player.x] == 'E')
+		{
+			write(1, "game over!\n", 10);
+			destroy(data);
+		}
 	}
 	return (key);
 }

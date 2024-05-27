@@ -6,7 +6,7 @@
 /*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:29 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/21 12:37:09 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/21 17:29:04 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ int				check_if_player_can_reach_coin(t_game *data, char **map_dup,
 					int x, int y);
 void			ft_double_pointer_free(char **pointer);
 int				close_window(t_game *data);
-static void		print_elements_to_screen(t_game *data, int x, int y);
+//static void		print_elements_to_screen(t_game *data, int x, int y);
 void			free_map(t_game *data);
+int				is_valid_move(t_game *data, char **map_dup, int x, int y);
+int				if_all_coin_collected_can_exit(t_game *data);
+void			decremet_c(t_game *data);
+void			destroy(t_game *data);
 #endif
