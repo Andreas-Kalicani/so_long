@@ -6,7 +6,7 @@
 /*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:28:31 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/27 16:13:14 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:04:00 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "so_long.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "../mlx/mlx.h"
 int	count_coins(t_game *data)
 {
 	int	i;

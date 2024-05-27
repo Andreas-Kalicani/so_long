@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:06:50 by akalican          #+#    #+#             */
-/*   Updated: 2024/05/27 16:21:00 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/27 19:53:44 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

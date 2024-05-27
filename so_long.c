@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:03 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/27 16:16:54 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/27 21:09:44 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	print_elements_to_screen(t_game *data, int x, int y)
 			data->door_texture.textures, (1920 / 2) + (x * 15), (1080 / 2) + (y
 				* 15));
 }
+
 
 void	free_map(t_game *data)
 {
@@ -82,6 +83,31 @@ void	print_map(t_game *data)
 		}
 		y++;
 	}
+}
+void	move_player(t_game *data, int new_x, int new_y)
+{
+    if (data->map.map[new_y][new_x] == 'C')
+    {
+        data->map.map[new_y][new_x] = '0';
+        data->map.coin_count--;
+        if (data->map.coin_count == 0)
+        {
+            // Iterate over the map to find the hidden exit
+            for (int y = 0; y < data->map.map_height; y++)
+            {
+                for (int x = 0; x < data->map.map_width; x++)
+                {
+                    if (data->map.map[y][x] == 'X')
+                    {
+                        // Replace the hidden exit with a visible exit
+                        data->map.map[y][x] = 'E';
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    // Handle other cases (moving into a wall, moving into an empty space, etc.)
 }
 
 int	main(int argc, char **argv)

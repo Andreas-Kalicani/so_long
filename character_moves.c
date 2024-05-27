@@ -6,7 +6,7 @@
 /*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:50:34 by akalican          #+#    #+#             */
-/*   Updated: 2024/05/27 16:12:36 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:51:42 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	move_down(t_game *data)
 		if (data->map.map[data->player.y][data->player.x] == 'C')
 			flood_fill(data, data->player.x, data->player.y,
 				&data->map.coin_count);
-		printf("data map: %p, x: %d, y: %d", &data, data->map_height,
-			data->map_width);
 		count_c = data->map.coin_count;
 		flood_fill(data, data->map_width, data->map_height, &count_c);
 	}
@@ -124,6 +122,7 @@ void	move_right(t_game *data)
 	}
 }
 
+/*
 int	character_moves(int key, t_game *data)
 {
 	if (key == w)
@@ -145,4 +144,27 @@ int	character_moves(int key, t_game *data)
 		}
 	}
 	return (key);
+} */
+
+int	character_moves(int key, t_game *data)
+{
+    if (key == w)
+        move_up(data);
+    if (key == s)
+        move_down(data);
+    if (key == a)
+        move_left(data);
+    if (key == d)
+        move_right(data);
+    if (key == ESC)
+        destroy(data);
+    if (data->map.coin_count == 0)
+    {
+        if (data->map.map[data->player.y][data->player.x] == 'E')
+        {
+            write(1, "game over!\n", 10);
+            destroy(data);
+        }
+    }
+    return (key);
 }

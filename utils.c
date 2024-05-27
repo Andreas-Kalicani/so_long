@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:07:07 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/27 16:17:11 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/27 21:13:24 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ void	ft_double_pointer_free(char **pointer)
 	}
 	free(pointer);
 }
-/*
-void	print_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
-}
-*/
-
 char	**map_duplicate(t_game *data)
 {
 	int		i;
@@ -66,81 +52,14 @@ char	**map_duplicate(t_game *data)
 	dupped_map[i] = NULL;
 	return (dupped_map);
 }
-/*
-int	check_if_player_can_reach_coin(t_game *data, char **map_dup, int x, int y)
-{
-	int	left;
-	int	right;
-	int	up;
-	int	down;
 
-	left = 0;
-	right = 0;
-	up = 0;
-	down = 0;
-	if (x >= data->map_width || y >= data->map_height || x < 0 || y < 0
-		|| map_dup[y][x] == 'V')
-		return (0);
-	if (map_dup[y][x] == 'P')
-		return (1);
-	map_dup[y][x] = 'V';
-	if (x > 0 && (map_dup[y][x - 1] == 'F' || map_dup[y][x - 1] == 'C'
-			|| map_dup[y][x - 1] == 'E' || map_dup[y][x - 1] == 'P'))
-		left = check_if_player_can_reach_coin(data, map_dup, x - 1, y);
-	if (x < data->map_width - 1 && (map_dup[y][x + 1] == 'F' || map_dup[y][x
-			+ 1] == 'C' || map_dup[y][x + 1] == 'E' || map_dup[y][x
-			+ 1] == 'P'))
-		right = check_if_player_can_reach_coin(data, map_dup, x + 1, y);
-	if (y > 0 && (map_dup[y - 1][x] == 'F' || map_dup[y - 1][x] == 'C'
-			|| map_dup[y - 1][x] == 'E' || map_dup[y - 1][x] == 'P'))
-		up = check_if_player_can_reach_coin(data, map_dup, x, y - 1);
-	if (y < data->map_height - 1 && (map_dup[y + 1][x] == 'F' || map_dup[y
-			+ 1][x] == 'C' || map_dup[y + 1][x] == 'E' || map_dup[y
-			+ 1][x] == 'P'))
-		down = check_if_player_can_reach_coin(data, map_dup, x, y + 1);
-	return (left || right || up || down);
-}
-*/
-/*
-int	check_if_player_can_reach_coin(t_game *data, char **map_dup, int x, int y)
-{
-	int	left;
-	int	right;
-	int	up;
-	int	down;
-
-	left = 0;
-	right = 0;
-	up = 0;
-	down = 0;
-	if (x < 0 || y < 0 || x >= data->map_width || y >= data->map_height
-		|| map_dup[y][x] == 'V')
-		return (0);
-	if (map_dup[y][x] == 'P')
-		return (1);
-	map_dup[y][x] = 'V';
-	if (x > 0 && (map_dup[y][x - 1] == 'F' || map_dup[y][x - 1] == 'C'
-			|| map_dup[y][x - 1] == 'E' || map_dup[y][x - 1] == 'P'))
-		left = check_if_player_can_reach_coin(data, map_dup, x - 1, y);
-	if (x < data->map_width - 1 && (map_dup[y][x + 1] == 'F' || map_dup[y][x
-			+ 1] == 'C' || map_dup[y][x + 1] == 'E' || map_dup[y][x
-			+ 1] == 'P'))
-		right = check_if_player_can_reach_coin(data, map_dup, x + 1, y);
-	if (y > 0 && (map_dup[y - 1][x] == 'F' || map_dup[y - 1][x] == 'C'
-			|| map_dup[y - 1][x] == 'E' || map_dup[y - 1][x] == 'P'))
-		up = check_if_player_can_reach_coin(data, map_dup, x, y - 1);
-	if (y < data->map_height - 1 && (map_dup[y + 1][x] == 'F' || map_dup[y
-			+ 1][x] == 'C' || map_dup[y + 1][x] == 'E' || map_dup[y
-			+ 1][x] == 'P'))
-		down = check_if_player_can_reach_coin(data, map_dup, x, y + 1);
-	return (left || right || up || down);
-}
-*/
 
 int	is_valid_move(t_game *data, char **map_dup, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= data->map_width || y >= data->map_height
 		|| map_dup[y][x] == 'V')
+		return (0);
+	if (map_dup[y][x] == 'E' && data->map.coin_count == 0)
 		return (0);
 	if (map_dup[y][x] == 'P')
 		return (1);
