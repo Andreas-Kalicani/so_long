@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:07:07 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/21 17:31:54 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/27 15:36:19 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	is_valid_move(t_game *data, char **map_dup, int x, int y)
 	if (map_dup[y][x] == 'P')
 		return (1);
 	if (map_dup[y][x] == 'F' || map_dup[y][x] == 'C' || map_dup[y][x] == 'E')
-		return (check_if_player_can_reach_coin(data, map_dup, x, y));
+		return (check_coin_reach(data, map_dup, x, y));
 	return (0);
 }
 
@@ -156,7 +156,7 @@ void	destroy(t_game *data)
 	exit(0);
 }
 
-int	check_if_player_can_reach_coin(t_game *data, char **map_dup, int x, int y)
+int	check_coin_reach(t_game *data, char **map_dup, int x, int y)
 {
 	int	left;
 	int	right;

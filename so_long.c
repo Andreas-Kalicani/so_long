@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:03 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/27 13:54:42 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/27 15:14:37 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,24 +61,6 @@ int	close_window(t_game *data)
 	exit(0);
 }
 
-void	init_texture(t_game *data)
-{
-	data->floor_texture.textures = mlx_xpm_file_to_image(data->mlx,
-			"./sprites/black_floor.xpm", &(data->floor_texture.width),
-			&(data->floor_texture.height));
-	data->wall_texture.textures = mlx_xpm_file_to_image(data->mlx,
-			"./sprites/wall.xpm", &(data->wall_texture.width),
-			&(data->wall_texture.height));
-	data->coin_texture.textures = mlx_xpm_file_to_image(data->mlx,
-			"./sprites/coin.xpm", &(data->coin_texture.width),
-			&(data->coin_texture.height));
-	data->player_texture.textures = mlx_xpm_file_to_image(data->mlx,
-			"./sprites/knight.xpm", &(data->wall_texture.width),
-			&(data->wall_texture.height));
-	data->door_texture.textures = mlx_xpm_file_to_image(data->mlx,
-			"./sprites/door.xpm", &(data->door_texture.width),
-			&(data->door_texture.height));
-}
 
 void	print_map(t_game *data)
 {
@@ -91,6 +73,11 @@ void	print_map(t_game *data)
 		x = 0;
 		while (data->map.map[y][x])
 		{
+			if (data->map.map[y][x] == 'P')
+			{
+				data->player.x = x;
+				data->player.y = y;
+			}
 			print_elements_to_screen(data, x, y);
 			x++;
 		}

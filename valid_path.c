@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
+/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:28:31 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/21 16:41:17 by andreasgjer      ###   ########.fr       */
+/*   Updated: 2024/05/27 16:13:14 by akalican         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,31 +62,6 @@ void	flood_fill(t_game *data, int x, int y, int *count_c)
 		flood_fill(data, x, (y - 1), count_c);
 	}
 	data->map.map[y][x] = '0';
-}
-
-int	if_all_coin_collected_can_exit(t_game *data)
-{
-	int	y;
-	int	x;
-
-	for (y = 0; y < data->map_height; y++)
-	{
-		for (x = 0; x < data->map_width; x++)
-		{
-			if (data->map.map[y][x] == 'C')
-			{
-				data->map.coin_count--;
-				data->map.map[y][x] = '0';
-			}
-		}
-	}
-	if (data->map.coin_count == 0)
-	{
-		data->map.map[data->player.y][data->player.x] = 'E';
-		if (data->map.map[data->player.y][data->player.x] == 'E')
-			return (1);
-	}
-	return (0);
 }
 
 void	decremet_c(t_game *data)

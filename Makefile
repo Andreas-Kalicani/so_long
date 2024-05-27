@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-#SANITIZER = -g3 -fsanitize=address
+SANITIZER = -g3 #-fsanitize=address
 
 MLX_PATH = mlx/
 
@@ -22,7 +22,7 @@ X = "\033[0m"
 UP = "\033[A"
 CUT = "\033[K"
 
-CFILES = so_long.c parse_map.c error.c character_moves.c valid_path.c utils.c
+CFILES = so_long.c parse_map.c error.c character_moves.c valid_path.c utils.c utils2.c
 
 OBJECTS = $(CFILES:.c=.o)
 
