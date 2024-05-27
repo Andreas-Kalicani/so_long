@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:07:07 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/27 15:36:19 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:17:11 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
 #include "../mlx/mlx.h"
+#include "so_long.h"
 
 void	ft_double_pointer_free(char **pointer)
 {

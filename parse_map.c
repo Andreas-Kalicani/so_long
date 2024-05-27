@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 13:06:50 by akalican          #+#    #+#             */
-/*   Updated: 2024/05/27 16:14:03 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:21:00 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	data_map_coin_exit_check(t_game *data)
 	return (1);
 }
 
-
 int	map_checker(t_game *data)
 {
 	int		p[2];
@@ -91,23 +90,26 @@ int	map_checker(t_game *data)
 	}
 	return (1);
 }
-char **parse(t_game *data)
+
+char	**parse(t_game *data)
 {
-    int i = 0;
-    char **return_value;
-	
-	return_value =(char **)malloc(sizeof(char *) * (data->map_height + 1));
-    char *buffer = read_and_trim_line(data->fd);
-    data->map_width = ft_strlen(buffer);
-    while (buffer)
-    {
-        process_line(data, return_value, buffer, i);
-        buffer = read_and_trim_line(data->fd);
-        i++;
-    }
-    return_value[i] = NULL;
-    data->map.map = return_value;
-    if (!map_checker(data) || data->map_height == data->map_width)
-        exit(1);
-    return return_value;
+	int		i;
+	char	**return_value;
+	char	*buffer;
+
+	i = 0;
+	return_value = (char **)malloc(sizeof(char *) * (data->map_height + 1));
+	buffer = read_and_trim_line(data->fd);
+	data->map_width = ft_strlen(buffer);
+	while (buffer)
+	{
+		process_line(data, return_value, buffer, i);
+		buffer = read_and_trim_line(data->fd);
+		i++;
+	}
+	return_value[i] = NULL;
+	data->map.map = return_value;
+	if (!map_checker(data) || data->map_height == data->map_width)
+		exit(1);
+	return (return_value);
 }
