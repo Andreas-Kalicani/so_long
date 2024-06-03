@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:07:07 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/27 21:13:24 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:50:47 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_double_pointer_free(char **pointer)
 	}
 	free(pointer);
 }
+
 char	**map_duplicate(t_game *data)
 {
 	int		i;
@@ -52,7 +53,6 @@ char	**map_duplicate(t_game *data)
 	dupped_map[i] = NULL;
 	return (dupped_map);
 }
-
 
 int	is_valid_move(t_game *data, char **map_dup, int x, int y)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:28:31 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/27 21:04:00 by akalican         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:47:44 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../mlx/mlx.h"
+
 int	count_coins(t_game *data)
 {
 	int	i;

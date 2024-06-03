@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akalican <akalican@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andreasgjertsenkalicani <andreasgjertse    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:08:29 by andreasgjer       #+#    #+#             */
-/*   Updated: 2024/05/27 16:02:29 by akalican         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:50:10 by andreasgjer      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char			**map_duplicate(t_game *data);
 int				check_coin_reach(t_game *data, char **map_dup, int x, int y);
 void			ft_double_pointer_free(char **pointer);
 int				close_window(t_game *data);
-//static void		print_elements_to_screen(t_game *data, int x, int y);
+// static void		print_elements_to_screen(t_game *data, int x, int y);
 void			free_map(t_game *data);
 int				is_valid_move(t_game *data, char **map_dup, int x, int y);
 int				if_all_coin_collected_can_exit(t_game *data);
@@ -95,6 +95,9 @@ void			decremet_c(t_game *data);
 void			destroy(t_game *data);
 void			init_texture(t_game *data);
 char			*read_and_trim_line(int fd);
-void			process_line(t_game *data, char **return_value, char *buffer,int i);
+void			process_line(t_game *data, char **return_value, char *buffer,
+					int i);
 void			element_counter(t_game *data, char *buffer);
+void			draw_texture(t_game *data, int pos[2]);
+void			check_coin(t_game *data);
 #endif
